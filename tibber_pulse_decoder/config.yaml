@@ -1,0 +1,37 @@
+# https://developers.home-assistant.io/docs/apps/configuration
+name: Tibber Pulse HAN decoder
+version: "1.0.0"
+slug: tibber_pulse_decoder
+description: Decodes the Tibber Pulse raw HAN MQTT feed into Home Assistant sensors
+url: "https://github.com/taraldb/tibber-pulse-decoder"
+arch:
+  - aarch64
+  - amd64
+init: false
+startup: application
+boot: auto
+# broker details come from the Mosquitto broker app; mqtt_* options override
+services:
+  - mqtt:want
+options:
+  pulse_topic: puls/publish
+  pulse_cmd_topic: puls/subscribe
+  batching_auto_disable: true
+  out_prefix: tibber/pulse
+  hass_discovery_enabled: true
+  energy_integration_enabled: true
+  energy_tz: Europe/Oslo
+  log_level: INFO
+schema:
+  pulse_topic: str
+  pulse_cmd_topic: str
+  batching_auto_disable: bool
+  out_prefix: str
+  hass_discovery_enabled: bool
+  energy_integration_enabled: bool
+  energy_tz: str
+  log_level: list(DEBUG|INFO|WARNING|ERROR)
+  mqtt_host: str?
+  mqtt_port: port?
+  mqtt_username: str?
+  mqtt_password: password?

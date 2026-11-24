@@ -1,0 +1,32 @@
+# Reference config only: the Unraid host has no `docker compose`; scripts/deploy.sh
+# uses plain `docker run`. Keep the two in sync.
+services:
+  tibber-pulse-decoder:
+    build: .
+    image: tibber-pulse-decoder:latest
+    container_name: tibber-pulse-decoder
+    restart: unless-stopped
+    network_mode: host
+    # LOCAL_HOST / LOCAL_PORT / LOCAL_USERNAME / LOCAL_PASSWORD / METER_ID_DEFAULT
+    env_file: .env
+    environment:
+      # source topic the Tibber Pulse publishes its raw HAN feed to
+      PULSE_TOPIC: "puls/publish"
+      # command topic; the decoder publishes `batching_disable true` here when it
+      # sees buffered-mode messages (and periodically as a refresh)
+      PULSE_CMD_TOPIC: "puls/subscribe"
+      BATCHING_AUTO_DISABLE: "true"
+      # decoded output: <OUT_PREFIX>/<meter_id>/state  (+ <OUT_PREFIX>/status)
+      OUT_PREFIX: "tibber/pulse"
+      # Home Assistant MQTT discovery
+      HASS_DISCOVERY_ENABLED: "true"
+      HASS_DISCOVERY_PREFIX: "homeassistant"
+      # hourly energy integrator (energy_hour_kwh / energy_last_hour_kwh)
+      ENERGY_INTEGRATION_ENABLED: "true"
+      ENERGY_TZ: "Europe/Oslo"
+      # gap bands (s): <= OK integrate silently, <= ESTIMATE fill+flag "estimated",
+      # above -> "degraded" for the rest of the hour. Resume from retained state on boot.
+      ENERGY_GAP_OK_SEC: "15"
+      ENERGY_GAP_ESTIMATE_SEC: "45"
+      ENERGY_RESUME_FROM_MQTT: "true"
+      LOG_LEVEL: "INFO"

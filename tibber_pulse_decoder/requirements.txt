@@ -1,0 +1,5 @@
+# Runtime deps for pulse_decoder.py (HA app + Unraid image)
+paho-mqtt>=2,<3
+amshan==2.1.1   # DLMS/COSEM + Aidon/Kaifa/Kamstrup decoding; imported as `han`
+construct       # pulled in by amshan, pinned here for reproducible builds
+tzdata          # IANA tz database for zoneinfo (ENERGY_TZ); slim image has none

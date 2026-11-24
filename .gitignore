@@ -1,0 +1,10 @@
+# secrets / personal data - never commit
+.env
+archive/
+mqtt.log
+.claude/
+
+.venv/
+__pycache__/
+*.pyc
+.DS_Store

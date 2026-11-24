@@ -1,0 +1,33 @@
+configuration:
+  pulse_topic:
+    name: Pulse topic
+    description: Topic the Tibber Pulse publishes its raw HAN feed to.
+  pulse_cmd_topic:
+    name: Pulse command topic
+    description: Topic the Pulse listens on for commands (used for batching_disable).
+  batching_auto_disable:
+    name: Auto-disable batching
+    description: Send "batching_disable true" to the Pulse when it is in buffered mode.
+  out_prefix:
+    name: Output topic prefix
+    description: Decoded JSON is published to <prefix>/<meter_id>/state.
+  hass_discovery_enabled:
+    name: MQTT discovery
+    description: Create the meter device and sensors in Home Assistant automatically.
+  energy_integration_enabled:
+    name: Hourly energy integrator
+    description: Compute energy this hour / last hour from active power.
+  energy_tz:
+    name: Time zone
+    description: Clock-hour boundary for the hourly energy integrator.
+  log_level:
+    name: Log level
+  mqtt_host:
+    name: MQTT host (override)
+    description: Leave empty to use the Mosquitto broker app automatically.
+  mqtt_port:
+    name: MQTT port (override)
+  mqtt_username:
+    name: MQTT username (override)
+  mqtt_password:
+    name: MQTT password (override)
